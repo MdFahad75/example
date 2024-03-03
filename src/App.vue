@@ -1,26 +1,52 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <h1>{{ title }}</h1>
+    <NAVBAR></NAVBAR>
+    <AllFriends :friends="friends" @delete="unfriend"></AllFriends>
+    <OnlineFriends :friends="friends"></OnlineFriends>
+    <axios></axios>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NAVBAR from "./components/Navbar.vue";
+import AllFriends from "./components/AllFriends.vue";
+import OnlineFriends from "./components/OnlineFriend.vue";
+import Axios from "./components/Axios.vue";
 
 export default {
-  name: 'App',
+  name: "APP",
+  data() {
+    return {
+      title: "Welcome to vue app",
+      friends: [
+        { name: "A", online: true },
+        { name: "B", online: false },
+        { name: "C", online: true },
+        { name: "D", online: false },
+        { name: "E", online: true },
+      ],
+    };
+  },
+  methods: {
+    unfriend(payload) {
+      this.friends = this.friends.filter((friend) => {
+        return friend.name !== payload.name;
+      });
+    },
+  },
   components: {
-    HelloWorld
-  }
-}
+    NAVBAR,
+    AllFriends,
+    OnlineFriends,
+    Axios,
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+h1 {
+  color: red;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
